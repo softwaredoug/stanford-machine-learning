@@ -16,12 +16,13 @@ public class Main {
 
         double learningRate = 0.00000001;
 
+        // train 500 times on the price/square footage
         for (int j = 0; j < 500; j++) {
 
             double sumError = 0;
             double sumErrorWithTerm = 0;
 
-            // sum error for all training data
+            // Error with respect to square footage
             for (int i = 0; i < squareFootage.length; i++) {
                 double hypothesis = priceHypothesis(squareFootage[i]);
                 double actual = price[i];
@@ -29,13 +30,17 @@ public class Main {
                 sumError += (actual - hypothesis);
                 double errWithTerm = (actual - hypothesis) * squareFootage[i];
                 sumErrorWithTerm += errWithTerm;
-                System.out.printf("Error %f, w/term %f, sumErr w/term %f\n", (actual - hypothesis), errWithTerm, sumErrorWithTerm);
-
-                //double adjustedTheta1 = theta1 - (learningRate * (actual - hypothesis));
-                //theta1 = adjustedTheta1;
+                //System.out.printf("Error %f, w/term %f, sumErr w/term %f\n", (actual - hypothesis), errWithTerm, sumErrorWithTerm);
             }
-            System.out.printf("ITER %d Total Error %f w/ term %f", j, sumError, sumErrorWithTerm);
+
+            // Error with respect to x1/theta1 which is one. This is just the sum of the errors
+            // An additional feature would be another batch here
+
+
+
+            System.out.printf("ITER %d Total Error %f w/ term %f\n", j, sumError, sumErrorWithTerm);
             theta2 = theta2 + learningRate * (sumErrorWithTerm);
+            theta1 = theta1 + (learningRate * sumError);
 
         }
 
